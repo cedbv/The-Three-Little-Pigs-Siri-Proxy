@@ -705,31 +705,31 @@ add_property_to_class(SiriPersonSearch, :scope)
 
 class OpenLink < SiriObject
   def initialize(ref="")
-	super("OpenLink", "com.apple.ace.assistant")
-	self.ref = ref
+super("OpenLink", "com.apple.ace.assistant")
+self.ref = ref
   end
 end
 add_property_to_class(OpenLink, :ref)
 
 class ClientBoundCommand < SiriObject
-	def initialize(encodedClassName, groupIdentifier, aceId=nil, refId=nil, callbacks=[])
-		super(encodedClassName, groupIdentifier)
-		self.aceId= aceId
-		self.refId = refId
-		self.callbacks = callbacks
-	end
+def initialize(encodedClassName, groupIdentifier, aceId=nil, refId=nil, callbacks=[])
+super(encodedClassName, groupIdentifier)
+self.aceId= aceId
+self.refId = refId
+self.callbacks = callbacks
+end
 end
 add_property_to_class(ClientBoundCommand, :aceId)
 add_property_to_class(ClientBoundCommand, :refId)
 add_property_to_class(ClientBoundCommand, :callbacks)
 
 class WebSearch < ClientBoundCommand
-	def initialize(refId=nil, aceId=nil, query="", provider="Default", targetAppId="")
-		super("Search", "com.apple.ace.websearch", aceId, refId)
-		self.query = query
-		self.provider = provider
-		self.targetAppId = targetAppId
-	end
+def initialize(refId=nil, aceId=nil, query="", provider="Default", targetAppId="")
+super("Search", "com.apple.ace.websearch", aceId, refId)
+self.query = query
+self.provider = provider
+self.targetAppId = targetAppId
+end
 end
 add_property_to_class(WebSearch, :query)
 add_property_to_class(WebSearch, :provider)

@@ -70,7 +70,7 @@ class SiriProxy::Plugin::Example < SiriProxy::Plugin
     request_completed #always complete your request! Otherwise the phone will "spin" at the user!
   end
   
-  listen_for /who am i/i do
+  listen_for /qui suis.je/i do
     if self.manager.user_fname.nil?
       say "I'm sorry but I couldn't retrieve any user data for you.."
     elsif self.manager.user_nickname.to_s == "NA"

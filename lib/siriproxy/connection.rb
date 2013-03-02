@@ -153,7 +153,7 @@ class SiriProxy::Connection < EventMachine::Connection
             plugin_manager.user_appleid = @user.appleAccountid
             plugin_manager.user_fname = @user.fname
             plugin_manager.user_nickname = @user.nickname
-            plugin_manager.user_language = object["language"]
+            plugin_manager.user_language = object["properties"]["language"]
             plugin_manager.user_devicetype = @user.devicetype
             plugin_manager.user_deviceOS = @user.deviceOS
             plugin_manager.user_lastIP = @user.last_ip
@@ -262,7 +262,7 @@ class SiriProxy::Connection < EventMachine::Connection
             plugin_manager.user_appleid = @user.appleAccountid
             plugin_manager.user_fname = @user.fname
             plugin_manager.user_nickname = @user.nickname
-            plugin_manager.user_language = object["language"]
+            plugin_manager.user_language = object["properties"]["language"]
             plugin_manager.user_devicetype = @user.devicetype
             plugin_manager.user_deviceOS = @user.deviceOS
             plugin_manager.user_lastIP = @user.last_ip
@@ -375,7 +375,7 @@ class SiriProxy::Connection < EventMachine::Connection
             plugin_manager.user_appleid = @user.appleAccountid
             plugin_manager.user_fname = @user.fname
             plugin_manager.user_nickname = @user.nickname
-            plugin_manager.user_language = object["language"]
+            plugin_manager.user_language = object["properties"]["language"]
             plugin_manager.user_devicetype = @user.devicetype
             plugin_manager.user_deviceOS = @user.deviceOS
             plugin_manager.user_lastIP = @user.last_ip
@@ -412,7 +412,7 @@ class SiriProxy::Connection < EventMachine::Connection
 
         else #if no assistant registed found
 
-          if $APP_CONFIG.private_server.to_s.upcase=="ON" and self.is_4S!=true and self.is_iPad3==false
+          if $APP_CONFIG.private_server.to_s.upcase=="ON" and ($APP_CONFIG.private_to_all_devices.to_s.upcase=="ON" or (self.is_4S!=true and self.is_iPad3==false))
 
             puts "[Authentification - SiriProxy] Assistant [#{@loadedassistant}] is not registered. Banning Connection :-("
             self.validationData_avail = false
@@ -580,6 +580,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = true
         self.is_iPad3 = false
@@ -598,6 +600,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = true
         self.is_iPad3 = false
@@ -612,6 +616,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = false
         self.is_iPad3 = true
@@ -626,6 +632,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = false
         self.is_iPad3 = true
@@ -640,6 +648,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = false
         self.is_iPad3 = true
@@ -654,10 +664,60 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = false
         self.is_iPad3 = true
         @devicetype="iPod 5th Gen"
+      elsif line.match(/iPad2,5/)
+        puts "[RollEyes - Siri*-*Proxy]"
+        puts "[Info - SiriProxy] iPad Mini Wifi connected from IP #{self.clientip}"
+        puts "[RollEyes - Siri*-*Proxy]"
+        if line.match(/5.0/)
+          self.iOS = 5
+        elsif line.match(/5.1/)
+          self.iOS = 5.1
+        elsif line.match(/6.0/)
+          self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
+        end
+        self.is_4S = false
+        self.is_iPad3 = true
+        @devicetype="iPad Mini Wifi"
+      elsif line.match(/iPad2,6/)
+        puts "[RollEyes - Siri*-*Proxy]"
+        puts "[Info - SiriProxy] iPad Mini GSM connected from IP #{self.clientip}"
+        puts "[RollEyes - Siri*-*Proxy]"
+        if line.match(/5.0/)
+          self.iOS = 5
+        elsif line.match(/5.1/)
+          self.iOS = 5.1
+        elsif line.match(/6.0/)
+          self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
+        end
+        self.is_4S = false
+        self.is_iPad3 = true
+        @devicetype="iPad Mini GSM"
+      elsif line.match(/iPad2,7/)
+        puts "[RollEyes - Siri*-*Proxy]"
+        puts "[Info - SiriProxy] iPad Mini CDMA connected from IP #{self.clientip}"
+        puts "[RollEyes - Siri*-*Proxy]"
+        if line.match(/5.0/)
+          self.iOS = 5
+        elsif line.match(/5.1/)
+          self.iOS = 5.1
+        elsif line.match(/6.0/)
+          self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
+        end
+        self.is_4S = false
+        self.is_iPad3 = true
+        @devicetype="iPad Mini CDMA"
       elsif line.match(/iPod6,/)
         puts "[RollEyes - Siri*-*Proxy]"
         puts "[Info - SiriProxy] iPod touch 6th generation?? connected from IP #{self.clientip}"
@@ -669,6 +729,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = false
         self.is_iPad3 = true
@@ -684,6 +746,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = false
         self.is_iPad3 = true
@@ -699,6 +763,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = false
         self.is_iPad3 = true
@@ -714,6 +780,8 @@ class SiriProxy::Connection < EventMachine::Connection
           self.iOS = 5.1
         elsif line.match(/6.0/)
           self.iOS = 6
+        elsif line.match(/6.1/)
+          self.iOS = 6.1
         end
         self.is_4S = false
         self.is_iPad3 = true
@@ -750,6 +818,8 @@ class SiriProxy::Connection < EventMachine::Connection
             self.iOS = 5.1
           elsif line.match(/6.0/)
             self.iOS = 6
+          elsif line.match(/6.1/)
+            self.iOS = 6.1
           end
           puts "[Info - SiriProxy] GSM iPhone 4 connected from IP #{self.clientip}"
           puts "[Info - SiriProxy] Original Header: " + line if $LOG_LEVEL > 2
@@ -766,6 +836,8 @@ class SiriProxy::Connection < EventMachine::Connection
             self.iOS = 5.1
           elsif line.match(/6.0/)
             self.iOS = 6
+          elsif line.match(/6.1/)
+            self.iOS = 6.1
           end
           puts "[Info - SiriProxy] CDMA iPhone 4 connected from IP #{self.clientip}"
           puts "[Info - SiriProxy] Original Header: " + line if $LOG_LEVEL > 2
@@ -782,6 +854,8 @@ class SiriProxy::Connection < EventMachine::Connection
             self.iOS = 5.1
           elsif line.match(/6.0/)
             self.iOS = 6
+          elsif line.match(/6.1/)
+            self.iOS = 6.1
           end
           puts "[Info - SiriProxy] iPhone 3GS connected from IP #{self.clientip}"
           puts "[Info - SiriProxy] Original Header: " + line if $LOG_LEVEL > 2
@@ -798,6 +872,8 @@ class SiriProxy::Connection < EventMachine::Connection
             self.iOS = 5.1
           elsif line.match(/6.0/)
             self.iOS = 6
+          elsif line.match(/6.1/)
+            self.iOS = 6.1
           end
           puts "[Info - SiriProxy] iPad2 Wifi Only connected from IP #{self.clientip}"
           puts "[Info - SiriProxy] Original Header: " + line if $LOG_LEVEL > 2
@@ -814,6 +890,8 @@ class SiriProxy::Connection < EventMachine::Connection
             self.iOS = 5.1
           elsif line.match(/6.0/)
             self.iOS = 6
+          elsif line.match(/6.1/)
+            self.iOS = 6.1
           end
           puts "[Info - SiriProxy] iPad2 GSM connected from IP #{self.clientip}"
           puts "[Info - SiriProxy] Original Header: " + line if $LOG_LEVEL > 2
@@ -830,6 +908,8 @@ class SiriProxy::Connection < EventMachine::Connection
             self.iOS = 5.1
           elsif line.match(/6.0/)
             self.iOS = 6
+          elsif line.match(/6.1/)
+            self.iOS = 6.1
           end
           puts "[Info - SiriProxy] iPad2 CDMA connected from IP #{self.clientip}"
           puts "[Info - SiriProxy] Original Header: " + line if $LOG_LEVEL > 2
@@ -846,6 +926,8 @@ class SiriProxy::Connection < EventMachine::Connection
             self.iOS = 5.1
           elsif line.match(/6.0/)
             self.iOS = 6
+          elsif line.match(/6.1/)
+            self.iOS = 6.1
           end
           puts "[Info - SiriProxy] iPad2 32nm Wifi Only connected from IP #{self.clientip}"
           puts "[Info - SiriProxy] Original Header: " + line if $LOG_LEVEL > 2
@@ -876,6 +958,8 @@ class SiriProxy::Connection < EventMachine::Connection
             self.iOS = 5.1
           elsif line.match(/6.0/)
             self.iOS = 6
+          elsif line.match(/6.1/)
+            self.iOS = 6.1
           end
           puts "[Info - SiriProxy] iPod touch 4th generation connected from IP #{self.clientip}"
           puts "[Info - SiriProxy] Original Header: " + line if $LOG_LEVEL > 2
@@ -965,6 +1049,7 @@ class SiriProxy::Connection < EventMachine::Connection
     return false if unzipped_input==nil or unzipped_input.empty?  #empty
     unpacked = unzipped_input[0...5].unpack('H*').first
     return true if(unpacked.match(/^0[34]/)) #Ping or pong
+    return true if(unpacked.match(/^ff/)) #clear context
     begin
       if unpacked.match(/^[0-9][15-9]/)
         puts "ROGUE PACKET!!! WHAT IS IT?! TELL US!!! IN IRC!! COPY THE STUFF FROM BELOW"
@@ -983,9 +1068,9 @@ class SiriProxy::Connection < EventMachine::Connection
     #the problem here is that the packet is now complete or something unknown for the match!
     #if first character is 0
 
-    unpacked="0400000001" if !unpacked.match(/^0(.)(.{8})$/) # its the value that causes the bug! Will treat it as ping pong!!! Hope this resolves this
+    #unpacked="0400000001" if !unpacked.match(/^(..)(.{8})$/) # its the value that causes the bug! Will treat it as ping pong!!! Hope this resolves this
     #fingers crossed
-    info = unpacked.match(/^0(.)(.{8})$/) #some times this doesnt match! needs 10 chars !!!
+    info = unpacked.match(/^(..)(.{8})$/) #some times this doesnt match! needs 10 chars !!!
 
     if unpacked==nil
       $stderr.puts "bug flash on unpacked"
@@ -997,9 +1082,8 @@ class SiriProxy::Connection < EventMachine::Connection
 
       #object=nil
       #return object
-    end
-    if info!=nil #lets hope for the magic fix
-      if(info[1] == "3" || info[1] == "4"  ) #Ping or pong -- just get these out of the way (and log them for good measure)
+    else #lets hope for the magic fix
+      if(info[1] == "03" || info[1] == "04" || info[1] == "ff") #Ping, pong or Clear Context -- just get these out of the way (and log them for good measure)
         #puts "Ping Pong #{unpacked}"
         object = unzipped_input[0...5]
 
@@ -1011,20 +1095,19 @@ class SiriProxy::Connection < EventMachine::Connection
 
         self.unzipped_output << object
 
-        type = (info[1] == "3") ? "Ping" : "Pong"
+        type = (info[1] == "03") ? "Ping" : ((info[1] == "04") ? "Pong" : "Clear Context")
         puts "[#{type} - #{self.name}] (#{info[2].to_i(16)})" if $LOG_LEVEL > 3
         self.unzipped_input = unzipped_input[5..-1]
 
         flush_unzipped_output()
         return nil
       end
+      object_size = info[2].to_i(16)
+      prefix = unzipped_input[0...5]
+      object_data = unzipped_input[5...object_size+5]
+      self.unzipped_input = unzipped_input[object_size+5..-1]
+      parse_object(object_data)
     end
-
-    object_size = info[2].to_i(16)
-    prefix = unzipped_input[0...5]
-    object_data = unzipped_input[5...object_size+5]
-    self.unzipped_input = unzipped_input[object_size+5..-1]
-    parse_object(object_data)
 
 
 
@@ -1067,6 +1150,9 @@ class SiriProxy::Connection < EventMachine::Connection
   end
 
   def prep_received_object(object)
+    if object["class"] == "FinishSpeech" or object["class"] == "SpeechRecognized"
+      @block_rest_of_session = false
+    end
     if object["refId"] == self.last_ref_id && @block_rest_of_session
       puts "[Info - Dropping Object from Apple] #{object["class"]}" if $LOG_LEVEL > 1
       pp object if $LOG_LEVEL > 3
@@ -1214,7 +1300,7 @@ class SiriProxy::Connection < EventMachine::Connection
         @client.appleAccountid="NA" if @client.appleAccountid==nil
 
         @client.valid="True" #needed if config in empy for the below
-        @client.valid="False" if $APP_CONFIG.private_server.to_s.upcase == "ON" and self.is_4S!=true and self.is_iPad3==false
+        @client.valid="False" if $APP_CONFIG.private_server.to_s.upcase == "ON" and ($APP_CONFIG.private_to_all_devices.to_s.upcase=="ON" or (self.is_4S!=true and self.is_iPad3==false))
         @client.devicetype=@devicetype
         @client.deviceOS=self.iOS
         @client.last_ip=@clientip
@@ -1290,7 +1376,7 @@ class SiriProxy::Connection < EventMachine::Connection
             @assistant.assistantid=@loadedassistant
             @assistant.speechid=@loadedspeechid
             @assistant.client_apple_account_id=@client.appleAccountid
-            if @key.id != nil
+            if @key != nil and @key.id != nil
               @assistant.key_id=@key.id
             else
               @assistant.key_id=0
@@ -1318,9 +1404,11 @@ class SiriProxy::Connection < EventMachine::Connection
           if self.is_4S
             puts "[Info - SiriProxy] Saving iPhone 4S validation Data"
             checkHave4SData(object)
+            get_validationData(object) if $APP_CONFIG.private_to_all_devices.to_s.upcase=="ON"
           elsif self.is_iPad3
             puts "[Info - SiriProxy] Saving iPad3 validation Data"
             checkHaveiPad3Data(object)
+            get_validationData(object) if $APP_CONFIG.private_to_all_devices.to_s.upcase=="ON"
           else
             get_validationData(object)
             if self.validationData_avail
@@ -1335,9 +1423,11 @@ class SiriProxy::Connection < EventMachine::Connection
           if self.is_4S
             puts "[Info -  SiriProxy] using iPhone 4S validationData and saving it"
             checkHave4SData(object)
+            get_validationData(object) if $APP_CONFIG.private_to_all_devices.to_s.upcase=="ON"
           elsif self.is_iPad3
             puts "[Info - SiriProxy] Using iPad3 validationData and saving it"
             checkHaveiPad3Data(object)
+            get_validationData(object) if $APP_CONFIG.private_to_all_devices.to_s.upcase=="ON"
           else
             get_validationData(object)
             if self.validationData_avail
@@ -1395,6 +1485,7 @@ class SiriProxy::Connection < EventMachine::Connection
                 @assistant.key_id=0
               end
               @assistant.devicetype=self.other_connection.devicetype
+              @assistant.deviceOS=self.other_connection.iOS
               @assistant.last_ip=self.other_connection.clientip
               pp self.other_connection.client if $LOG_LEVEL > 2
 
@@ -1416,6 +1507,27 @@ class SiriProxy::Connection < EventMachine::Connection
                   $keyDao.update_used(self.other_connection.key)
                   puts "[Client - SiriProxy] NEW Client [#{self.other_connection.client.appleAccountid}] created Assistantid [#{@assistant.assistantid}]"
 
+                elsif self.other_connection.client!=nil and self.other_connection.client.fname!=nil
+                  @oldclient.fname=self.other_connection.client.fname #in case they ever change this
+                  @oldclient.nickname=self.other_connection.client.nickname #in case they ever change this
+                  @oldclient.appleDBid=self.other_connection.client.appleDBid
+                  @oldclient.appleAccountid=self.other_connection.client.appleAccountid
+                  @oldclient.devicetype=self.other_connection.client.devicetype #For users with multiple devices on same Apple Account
+                  @oldclient.deviceOS=self.other_connection.iOS #For users with multiple devices on same Apple Account
+                  @oldclient.last_ip=self.other_connection.clientip
+                  $clientsDao.update(@oldclient)
+                  @assistant.client_apple_account_id=@oldclient.appleAccountid
+                  $assistantDao.createassistant(@assistant)
+                  puts "[Client - SiriProxy] Created Assistant ID #{@assistant.assistantid} using key [#{self.other_connection.key.id}]"
+                  $keyDao.update_used(self.other_connection.key)
+                  puts "[Client - SiriProxy] OLD Client [#{self.other_connection.client.appleAccountid}] created Assistantid [#{@assistant.assistantid}]"
+                  plugin_manager.user_assistant = @assistant.assistantid
+                  plugin_manager.user_appleid = @oldclient.appleAccountid
+                  plugin_manager.user_fname = @oldclient.fname
+                  plugin_manager.user_nickname = @oldclient.nickname
+                  plugin_manager.user_devicetype = @oldclient.devicetype
+                  plugin_manager.user_deviceOS = @oldclient.deviceOS
+                  plugin_manager.user_lastIP = @oldclient.last_ip
                 elsif @client!=nil and @client.fname!=nil
                   @oldclient.fname=@client.fname #in case they ever change this
                   @oldclient.nickname=@client.nickname #in case they ever change this
@@ -1430,7 +1542,13 @@ class SiriProxy::Connection < EventMachine::Connection
                   puts "[Client - SiriProxy] Created Assistant ID #{@assistant.assistantid} using key [#{self.other_connection.key.id}]"
                   $keyDao.update_used(self.other_connection.key)
                   puts "[Client - SiriProxy] OLD Client [#{self.other_connection.client.appleAccountid}] created Assistantid [#{@assistant.assistantid}]"
-
+                  plugin_manager.user_assistant = @assistant.assistantid
+                  plugin_manager.user_appleid = @oldclient.appleAccountid
+                  plugin_manager.user_fname = @oldclient.fname
+                  plugin_manager.user_nickname = @oldclient.nickname
+                  plugin_manager.user_devicetype = @oldclient.devicetype
+                  plugin_manager.user_deviceOS = @oldclient.deviceOS
+                  plugin_manager.user_lastIP = @oldclient.last_ip
                 end
               end
             end
@@ -1451,7 +1569,7 @@ class SiriProxy::Connection < EventMachine::Connection
       #keeping this for filters
       new_obj = received_object(object)
       #puts self.name
-      if self.validationData_avail==false and self.name=='iPhone' and self.is_4S==false and self.is_iPad3==false
+      if self.validationData_avail==false and self.name=='iPhone' and ($APP_CONFIG.private_to_all_devices.to_s.upcase=="ON" or (self.is_4S==false and self.is_iPad3==false))
         puts "[Protection - Siriproxy] Dropping Object from #{self.name}] #{object["class"]} due to no Validation or Authentification available" if $LOG_LEVEL >= 1
         puts '[Protection - Siriproxy] Closing both connections...'
         self.close_connection()

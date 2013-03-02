@@ -55,17 +55,4 @@ class SiriProxy::Plugin < Cora::Plugin
     self.class.filters
   end
 
-  # Custom API methods
-  def user_name
-	return manager.user_fname.to_s
-  end
-
-  def user_language
-	return manager.user_language.to_s
-  end
-  
-  def user_appleid
-	return manager.user_appleid.to_s
-  end
-  
 end
